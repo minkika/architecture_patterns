@@ -2,16 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{%block title%}{%endblock%}</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {%block menu%}
-    <div><a href='/random/'>Рандом</a></div>
-    <div><a href='/contact/'>Контакты</a></div>
-    <div><a href='/about/'>О нас</a></div>
-    {%endblock%}
-    
-    {%block main%}
-    {%endblock%}
+{% block body %}
+{% endblock %}
+
 </body>
 </html>
