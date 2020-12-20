@@ -1,13 +1,16 @@
 import datetime
 
 from framework import render_
+from logging_mod import Logger, debug
+
+logger = Logger('main')
 
 
 def about_view(request):
-    # Просто возвращаем текст
     return '200 OK', render_('about.html')
 
 
+@debug
 def contact_view(request):
     # Проверка метода запроса
     if request['method'] == 'POST':
@@ -25,10 +28,11 @@ def contact_view(request):
 
 
 def index_view(request):
-    # print(request)
     return '200 OK', render_('index.html')
 
 
+@debug
 class Other:
     def __call__(self, request):
         return '404 WHAT', render_('page_404.html')
+
