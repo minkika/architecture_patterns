@@ -3,6 +3,7 @@ from framework import render_, Application
 from framework.cbv import ListView, CreateView
 from logging_mod import Logger, debug
 from models import TrainingSite, BaseSerializer, EmailNotifier, SmsNotifier
+from urllib.parse import unquote
 
 site = TrainingSite()
 logger = Logger('main')
@@ -21,10 +22,8 @@ def create_course(request):
     if request['method'] == 'POST':
         # метод пост
         data = request['data']
-        name = data['name'].decode('uri')
-        print(name)
+        name = unquote(data['name'])
         category_id = data.get('category_id')
-        print(category_id)
         category = None
         if category_id:
             category = site.find_category_by_id(int(category_id))
@@ -49,7 +48,7 @@ class CategoryCreateView(CreateView):
         return context
 
     def create_obj(self, data: dict):
-        name = data['name']
+        name = unquote(data['name'])
         category_id = data.get('category_id')
 
         category = None
@@ -74,10 +73,7 @@ class StudentCreateView(CreateView):
     template_name = 'create_student.html'
 
     def create_obj(self, data: dict):
-        print('==============================>', data)
-        print('==============================>', type(data['name']))
-        print('==============================>', data['name'].encode('utf-8').decode('utf-8'))
-        name = data['name']
+        name = unquote(data['name'])
         new_obj = site.create_user('student', name)
         site.students.append(new_obj)
 
@@ -93,9 +89,9 @@ class AddStudentByCourseCreateView(CreateView):
 
     def create_obj(self, data: dict):
         print(data)
-        course_name = data['course_name']
+        course_name = unquote(data['course_name'])
         course = site.get_course(course_name)
-        student_name = data['student_name']
+        student_name = unquote(data['student_name'])
         student = site.get_student(student_name)
         course.add_student(student)
 
@@ -133,8 +129,7 @@ application = Application(urlpatterns, front_controllers)
 @application.add_route('/copy-course/')
 def copy_course(request):
     request_params = request['request_params']
-    print(request_params)
-    name = request_params['name']
+    name = unquote(request_params['name'])
     old_course = site.get_course(name)
     if old_course:
         new_name = f'copy_{name}'
