@@ -4,16 +4,26 @@
 {% endblock %}
 {% block body %}
     <h2>Список студентов</h2>
-    <ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Студент</th>
+          <th>Курсы</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for item in objects_list %}
-            <li>
-                Студент {{ item.name }}
-                <ul>
-                    {% for course in item.courses %}
-                        <li>Курс {{ course.name }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
+            <tr>
+                <td>Студент {{ item.name }}</td>
+                <td>
+                    <ul>
+                        {% for course in item.courses %}
+                            <li>{{ course.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+      </tbody>
+    </table>
 {% endblock %}

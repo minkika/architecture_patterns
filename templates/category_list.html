@@ -3,12 +3,21 @@
 Список курсов
 {% endblock %}
 {% block body %}
-<h2>Список категорий</h2>
-<ul>
-    {% for item in objects_list %}
-    <li>
-        {{item.name}} <span>Количество курсов: {{item.course_count()}}</span>
-    </li>
-    {% endfor %}
-</ul>
+    <h2>Список категорий</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Категория</th>
+          <th>Количество курсов</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in objects_list %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.course_count()}}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock %}

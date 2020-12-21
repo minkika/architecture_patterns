@@ -3,14 +3,16 @@
     Создание студента
 {% endblock %}
 {% block body %}
-    <h2>Добавить студента на курс</h2>
+    <h2>Запись студента на курс</h2>
     <form method="post">
-        <select size="3" name="course_name">
+        <label for="course">Курс</label>
+        <select name="course_name" id="course">
             {% for item in courses %}
                 <option value="{{ item.name }}">{{ item.name }}</option>
             {% endfor %}
         </select>
-        <select size="3" name="student_name">
+        <label for="student">Студент</label>
+        <select name="student_name" id="student">
             {% for item in students %}
                 <option value="{{ item.name }}">{{ item.name }}</option>
             {% endfor %}

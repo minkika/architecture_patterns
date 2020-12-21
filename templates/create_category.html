@@ -5,8 +5,10 @@
 {% block body %}
 <h2>Создание категории</h2>
 <form method="post">
-    <input type="text" name="name" placeholder="Название">
-    <select size="3" name="category_id">
+    <label for="name">Название</label>
+    <input type="text" name="name" placeholder="Название" id="name" />
+    <label for="parent_category">Родительская категория</label>
+    <select name="category_id" id="parent_category">
         {% for item in categories %}
         <option value="{{item.id}}">{{item.name}}</option>
         {% endfor %}

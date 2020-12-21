@@ -21,7 +21,8 @@ def create_course(request):
     if request['method'] == 'POST':
         # метод пост
         data = request['data']
-        name = data['name'].encode('utf-8').decode('utf-8')
+        name = data['name'].decode('uri')
+        print(name)
         category_id = data.get('category_id')
         print(category_id)
         category = None
@@ -91,6 +92,7 @@ class AddStudentByCourseCreateView(CreateView):
         return context
 
     def create_obj(self, data: dict):
+        print(data)
         course_name = data['course_name']
         course = site.get_course(course_name)
         student_name = data['student_name']
