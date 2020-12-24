@@ -3,13 +3,12 @@
 Список курсов
 {% endblock %}
 {% block body %}
-{% include "inc-menu.html" %}
-<h1>Список курсов</h1>
+<h2>Список курсов</h2>
 <ul>
 
     {% for item in objects_list %}
     <li>
-        {{item.name}} <span><a href="/copy-course/?name={{item.name}}">скопировать</a></span>
+        {{item.name}} <span><a href="/copy-course/?name={{item.name}}">Cкопировать</a></span>
     </li>
     {% endfor %}
 </ul>

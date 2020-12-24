@@ -1,18 +1,13 @@
-import chardet
-
-from framework import Application, render_
-from models import TrainingSite
+import views
+from framework import render_, DebugApplication
 from logging_mod import Logger, debug
-
-# Создание копирование курса, список курсов
-# Регистрация пользователя, список пользователей
-# Логирование
+from models import TrainingSite
 
 site = TrainingSite()
 logger = Logger('main')
 
 
-def main_view(request):
+def course_list(request):
     logger.log('Список курсов')
     return '200 OK', render_('course_list.html', objects_list=site.courses)
 
@@ -22,6 +17,8 @@ def create_course(request):
     if request['method'] == 'POST':
         # метод пост
         data = request['data']
+        print('+++++++++>', request)
+        print('+++++++++>', request['data'])
         name = data['name'].encode('utf-8').decode('utf-8')
         category_id = data.get('category_id')
         print(category_id)
@@ -37,29 +34,32 @@ def create_course(request):
         return '200 OK', render_('create_course.html', categories=categories)
 
 
+@debug
 def create_category(request):
     if request['method'] == 'POST':
         data = request['data']
-        print('=================>', data['name'].encode('utf-8').decode('utf-8'))
         name = data['name'].encode('utf-8').decode('utf-8')
         category_id = data.get('category_id')
-
         category = None
         if category_id:
             category = site.find_category_by_id(int(category_id))
-
         new_category = site.create_category(name, category)
         site.categories.append(new_category)
-        return '200 OK', render_('create_category.html')
+        categories = site.categories
+        return '200 OK', render_('create_category.html', categories=categories)
     else:
         categories = site.categories
         return '200 OK', render_('create_category.html', categories=categories)
 
 
 urlpatterns = {
-    '/': main_view,
+    '/': views.index_view,
     '/create-course/': create_course,
-    '/create-category/': create_category
+    '/course-list/': course_list,
+    '/create-category/': create_category,
+    '/about/': views.about_view,
+    '/contact/': views.contact_view,
+    '/other/': views.Other(),
 }
 
 
@@ -71,7 +71,9 @@ front_controllers = [
     secret_controller
 ]
 
-application = Application(urlpatterns, front_controllers)
+# application = Application(urlpatterns, front_controllers)
+application = DebugApplication(urlpatterns, front_controllers)
+# application = MockApplication(urlpatterns, front_controllers)
 
 
 @application.add_route('/copy-course/')
@@ -85,7 +87,6 @@ def copy_course(request):
         new_course = old_course.clone()
         new_course.name = new_name
         site.courses.append(new_course)
-
     return '200 OK', render_('course_list.html', objects_list=site.courses)
 
 
