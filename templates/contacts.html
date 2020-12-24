@@ -3,9 +3,12 @@
 {% block body %}
     <h2>Отправить нам сообщение</h2>
     <form method="post">
-        <input type="text" name="title" placeholder="Заголовок">
-        <input type="text" name="text" placeholder="Текст сообщения">
-        <input type="email" name="email" placeholder="email">
+        <label for="title">Заголовок сообщения</label>
+        <input type="text" name="title" placeholder="Заголовок" id="title" />
+        <label for="text">Текст сообщения</label>
+        <input type="text" name="text" placeholder="Текст сообщения" id="text" />
+        <label for="email">Ваш email</label>
+        <input type="email" name="email" placeholder="email" id="email" />
         <button type="submit">Отправить</button>
     </form>
 {% endblock %}

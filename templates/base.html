@@ -1,16 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
+
+    <style type="text/css">
+    nav.navigation {
+        border-bottom: solid 1px #ccc;
+    }
+    nav.navigation > .container {
+        display: flex;
+        flex-direction: row;
+        padding: 12px 6px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    nav.navigation > .container .end {
+        align-self: flex-end;
+    }
+    nav.navigation > .container.between {
+        justify-content: space-between;
+    }
+    nav.navigation > .container a {
+        display: inline-flex;
+        padding: 3px 6px;
+    }
+    .page {
+        margin-top: 24px;
+    }
+    label[for] {
+        cursor: pointer;
+    }
+    </style>
+
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<h1>Учебный сайт</h1>
-<hr>
+
+
+<nav class="navigation">
+    <div class="container between">
+        <a href="/">
+          Учебный сайт
+        </a>
+        <span class="end">
+            <a href="/about/">
+              О нас
+            </a>
+            <a href="/contact/">
+              Контакты
+            </a>
+        </span>
+    </div>
+</nav>
+
 {% block menu %}
 {% include "inc-menu.html" %}
 {% endblock %}
-{% block body %}
-{% endblock %}
+
+<div class="container page">
+    {% block body %}
+    {% endblock %}
+</div>
 </body>
 </html>
