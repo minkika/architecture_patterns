@@ -4,3 +4,5 @@ framework/__pycache__
 __pycache__/
 /messages/message_20122020_22.03.32.txt
 messages/message_21122020_18.40.40.txt
+db/patterns.sqlite
+patterns.sqlite

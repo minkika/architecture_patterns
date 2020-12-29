@@ -4,11 +4,16 @@ from framework.cbv import ListView, CreateView
 from logging_mod import Logger, debug
 from models import TrainingSite, BaseSerializer, EmailNotifier, SmsNotifier
 from urllib.parse import unquote
+from framework import UnitOfWork
+from mappers import MapperRegistry
+
 
 site = TrainingSite()
 logger = Logger('main')
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 
 @debug
@@ -76,6 +81,8 @@ class StudentCreateView(CreateView):
         name = unquote(data['name'])
         new_obj = site.create_user('student', name)
         site.students.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 class AddStudentByCourseCreateView(CreateView):
